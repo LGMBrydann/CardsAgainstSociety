@@ -1,1 +1,91 @@
+body {
 
+    background:
+
+    radial-gradient(
+        circle at top,
+        #312e81,
+        #020617 60%
+    );
+
+}
+
+
+
+.stars {
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+    background-image:
+
+    radial-gradient(
+        white 1px,
+        transparent 1px
+    );
+
+    background-size:
+
+    50px 50px;
+
+    animation:
+
+    moveStars 80s linear infinite;
+
+    opacity:.5;
+
+}
+
+
+
+.stars::before {
+
+    content:"";
+
+    position:absolute;
+
+    width:100%;
+    height:100%;
+
+
+    background-image:
+
+    radial-gradient(
+        #38bdf8 1px,
+        transparent 1px
+    );
+
+
+    background-size:
+
+    90px 90px;
+
+
+    animation:
+
+    moveStars 120s linear infinite;
+
+
+}
+
+
+
+@keyframes moveStars {
+
+
+    from {
+
+        transform:translateY(0);
+
+    }
+
+
+    to {
+
+        transform:translateY(1000px);
+
+    }
+
+}

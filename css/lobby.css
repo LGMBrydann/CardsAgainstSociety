@@ -1,0 +1,87 @@
+.lobby-box {
+
+background:
+rgba(255,255,255,.1);
+
+backdrop-filter:
+blur(15px);
+
+padding:30px;
+
+border-radius:25px;
+
+width:350px;
+
+}
+
+
+input {
+
+width:100%;
+
+padding:15px;
+
+border-radius:15px;
+
+border:none;
+
+margin:10px 0;
+
+font-size:18px;
+
+}
+
+
+hr {
+
+margin:25px;
+
+opacity:.3;
+
+}
+
+
+#roomInfo {
+
+margin-top:30px;
+
+font-size:20px;
+
+}
+
+
+.player-card {
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+background:
+rgba(255,255,255,.1);
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:20px;
+
+backdrop-filter:blur(10px);
+
+}
+
+
+.player-avatar {
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:2px solid white;
+
+}

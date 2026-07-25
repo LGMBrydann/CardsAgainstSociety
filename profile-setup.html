@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Create Profile</title>
+
+<link rel="stylesheet" href="css/style.css">
+
+</head>
+
+
+<body>
+
+<div class="container">
+
+
+<h1>
+Create Your Profile
+</h1>
+
+
+<img 
+id="avatarPreview"
+src="assets/default-avatar.png"
+width="150"
+height="150"
+style="border-radius:50%; object-fit:cover;"
+>
+
+
+<br><br>
+
+
+<input 
+type="file"
+id="avatarInput"
+accept="image/*"
+>
+
+
+<br><br>
+
+
+<input
+type="text"
+id="username"
+placeholder="Choose username"
+maxlength="16"
+>
+
+
+<button id="saveProfile">
+
+Continue 🚀
+
+</button>
+
+
+<p id="message"></p>
+
+
+</div>
+
+
+<script type="module" src="js/profile-setup.js"></script>
+
+
+</body>
+
+</html>

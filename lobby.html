@@ -1,1 +1,103 @@
+<!DOCTYPE html>
+<html>
 
+<head>
+
+<title>
+Lobby - Cards Against Society
+</title>
+
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/lobby.css">
+
+</head>
+
+
+<body>
+
+
+<div class="container">
+
+
+<h1>
+🎮 Lobby
+</h1>
+
+
+<div class="lobby-box">
+
+
+<button id="publicGame">
+🌎 Create Public Game
+</button>
+
+
+<button id="privateGame">
+🔒 Create Private Game
+</button>
+
+
+<button id="cpuGame">
+🤖 Play CPU
+</button>
+
+
+<hr>
+
+
+<h2>
+Join Private Game
+</h2>
+
+
+<input 
+id="roomCode"
+placeholder="Enter Code"
+>
+
+
+<button id="joinRoom">
+Join
+</button>
+
+
+</div>
+
+
+<div id="roomInfo">
+
+<h2 id="roomTitle"></h2>
+
+<p>
+Room Code:
+<span id="codeDisplay"></span>
+</p>
+
+
+<h3>
+Players
+</h3>
+
+
+<div id="players"></div>
+
+
+<button id="readyButton">
+✅ Ready
+</button>
+
+
+<button id="startButton" hidden>
+🚀 Start Game
+</button>
+
+
+</div>
+
+
+<script type="module" src="js/lobby.js"></script>
+
+
+</body>
+
+</html>
