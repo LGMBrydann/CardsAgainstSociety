@@ -238,6 +238,10 @@ function listenRoom(code) {
             const currentUserId = auth.currentUser?.uid || null;
             startButton.hidden = data.host !== currentUserId;
         }
+
+        if (data.status === "playing" && currentRoom && window.location.pathname.includes("lobby.html")) {
+            window.location.href = "game.html?room=" + encodeURIComponent(currentRoom);
+        }
     });
 }
 

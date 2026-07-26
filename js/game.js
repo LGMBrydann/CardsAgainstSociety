@@ -92,15 +92,52 @@ function renderScores() {
     });
 }
 
+function renderRoundCounter() {
+    const roundText = document.getElementById("roundText");
+    const roundBadge = document.getElementById("roundBadge");
+    const value = currentRoomData?.round || 1;
+    if (roundText) {
+        roundText.textContent = `Round ${value}`;
+    }
+    if (roundBadge) {
+        roundBadge.textContent = value;
+    }
+}
+
+function renderWinnerState() {
+    const resultMessage = document.getElementById("resultMessage");
+    const winnerPanel = document.getElementById("winnerPanel");
+    const winnerPanelText = document.getElementById("winnerPanelText");
+
+    if (!resultMessage || !currentRoomData) {
+        return;
+    }
+
+    if (currentRoomData.winner && currentRoomData.winnerText) {
+        const winner = (currentRoomData.players || []).find((player) => player.id === currentRoomData.winner);
+        const winnerName = winner?.name || "Someone";
+        const cardText = currentRoomData.winnerCard?.text || currentRoomData.winnerText;
+        resultMessage.innerHTML = `<strong>${winnerName} won!</strong><br>${cardText}`;
+        if (winnerPanel && winnerPanelText) {
+            winnerPanel.classList.remove("hidden");
+            winnerPanelText.innerHTML = `<strong>${winnerName} won!</strong><br>${cardText}`;
+        }
+    } else {
+        resultMessage.textContent = "";
+        if (winnerPanel) {
+            winnerPanel.classList.add("hidden");
+        }
+    }
+}
+
 function renderSubmissions() {
     const judgePanel = document.getElementById("judgePanel");
     const waitingPanel = document.getElementById("waitingPanel");
     const submitButton = document.getElementById("submitCard");
     const waitingText = document.getElementById("waitingText");
     const submissionsArea = document.getElementById("submissions");
-    const resultMessage = document.getElementById("resultMessage");
 
-    if (!judgePanel || !waitingPanel || !submissionsArea || !waitingText || !submitButton || !resultMessage) {
+    if (!judgePanel || !waitingPanel || !submissionsArea || !waitingText || !submitButton) {
         return;
     }
 
@@ -136,12 +173,6 @@ function renderSubmissions() {
             ? "Your card is in. Waiting for the judge..."
             : "Waiting for the judge...";
     }
-
-    if (currentRoomData?.winnerText) {
-        resultMessage.textContent = `Winner: ${currentRoomData.winnerText}`;
-    } else {
-        resultMessage.textContent = "";
-    }
 }
 
 async function ensurePlayerHand() {
@@ -151,14 +182,15 @@ async function ensurePlayerHand() {
     }
 
     const existingHand = currentRoomData.hands?.[userId];
-    if (existingHand?.length) {
+    if (Array.isArray(existingHand) && existingHand.length) {
         hand = existingHand;
         renderHand();
         return;
     }
 
     const roomRef = doc(db, "rooms", roomCode);
-    const newHand = [];
+    const baseHand = Array.isArray(currentRoomData.hands?.[userId]) ? currentRoomData.hands[userId] : [];
+    const newHand = [...baseHand];
     const whiteCardPool = (await import("./cards.js")).whiteCards;
 
     while (newHand.length < 5 && whiteCardPool.length) {
@@ -189,7 +221,7 @@ async function syncRoomState() {
         currentRoomData = snapshot.data();
 
         document.getElementById("roomCode").textContent = roomCode;
-        document.getElementById("roundText").textContent = `Round ${currentRoomData.round || 1}`;
+        renderRoundCounter();
 
         const blackCardText = currentRoomData.blackCard || "Waiting for the next round...";
         document.getElementById("blackCard").textContent = blackCardText;
@@ -212,6 +244,7 @@ async function syncRoomState() {
 
         renderScores();
         renderSubmissions();
+        renderWinnerState();
         await ensurePlayerHand();
         renderHand();
     });

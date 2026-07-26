@@ -41,6 +41,26 @@ function getNextJudge(players, currentJudge) {
     return players[nextIndex].id;
 }
 
+function ensurePlayerHands(players, existingHands = {}, currentScores = {}, judgeId) {
+    const hands = {};
+    players.forEach((player) => {
+        if (player.id === judgeId) {
+            hands[player.id] = [];
+        } else {
+            const existingHand = Array.isArray(existingHands[player.id]) ? existingHands[player.id] : [];
+            if (existingHand.length >= 5) {
+                hands[player.id] = existingHand;
+            } else {
+                hands[player.id] = [...existingHand, ...getRandomCards(5 - existingHand.length)];
+            }
+        }
+        if (!currentScores[player.id]) {
+            currentScores[player.id] = 0;
+        }
+    });
+    return { hands, scores: currentScores };
+}
+
 export async function startRound(roomCode) {
     await loadCards();
 
@@ -55,27 +75,22 @@ export async function startRound(roomCode) {
     const players = Array.isArray(data.players) ? data.players : [];
     const card = blackCards[Math.floor(Math.random() * blackCards.length)];
     const currentScores = data.scores || {};
-
-    const scores = {};
-    players.forEach((player) => {
-        scores[player.id] = currentScores[player.id] || 0;
-    });
-
-    const hands = {};
-    players.forEach((player) => {
-        hands[player.id] = getRandomCards(5);
-    });
+    const existingHands = data.hands || {};
+    const nextJudge = getNextJudge(players, data.judge);
+    const { hands, scores } = ensurePlayerHands(players, existingHands, currentScores, nextJudge);
 
     await updateDoc(roomRef, {
         status: "playing",
         round: (data.round || 0) + 1,
-        judge: getNextJudge(players, data.judge),
+        judge: nextJudge,
         blackCard: card.text,
         submissions: {},
         scores,
         hands,
         winner: null,
-        winnerText: ""
+        winnerText: "",
+        winnerCard: null,
+        roundOver: false
     });
 }
 
@@ -101,7 +116,8 @@ export async function submitCard(roomCode, playerId, card) {
     submissions[playerId] = {
         playerId,
         playerName: player?.name || "Player",
-        text: card.text
+        text: card.text,
+        card
     };
 
     await updateDoc(roomRef, {
@@ -140,11 +156,13 @@ export async function chooseWinner(roomCode, submissionKey) {
     await updateDoc(roomRef, {
         winner: winnerId,
         winnerText: selectedSubmission.text,
+        winnerCard: selectedSubmission.card || null,
         scores,
-        status: "round-over"
+        status: "round-over",
+        roundOver: true
     });
 
     window.setTimeout(() => {
         startRound(roomCode).catch((error) => console.error(error));
-    }, 1400);
+    }, 2200);
 }
