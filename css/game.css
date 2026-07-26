@@ -1,0 +1,116 @@
+.game-container {
+
+height:100vh;
+
+display:flex;
+
+flex-direction:column;
+
+align-items:center;
+
+justify-content:center;
+
+gap:20px;
+
+}
+
+
+.black-card {
+
+background:black;
+
+color:white;
+
+padding:30px;
+
+width:350px;
+
+border-radius:20px;
+
+}
+
+
+#hand {
+
+display:flex;
+
+gap:15px;
+
+flex-wrap:wrap;
+
+justify-content:center;
+
+}
+
+
+
+.card {
+
+background:white;
+
+color:black;
+
+padding:20px;
+
+width:160px;
+
+height:200px;
+
+border-radius:20px;
+
+cursor:pointer;
+
+transition:.2s;
+
+}
+
+
+
+.card:hover {
+
+transform:translateY(-10px);
+
+}
+
+
+.selected {
+
+outline:5px solid #8b5cf6;
+
+}
+
+.player-card {
+
+display:flex;
+
+align-items:center;
+
+gap:15px;
+
+background:
+rgba(255,255,255,.1);
+
+padding:15px;
+
+margin:10px 0;
+
+border-radius:20px;
+
+backdrop-filter:blur(10px);
+
+}
+
+
+.player-avatar {
+
+width:60px;
+
+height:60px;
+
+border-radius:50%;
+
+object-fit:cover;
+
+border:2px solid white;
+
+}

@@ -20,6 +20,11 @@ import {
 from
 "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
 
+import {
+    startRound
+} from "./rounds.js";
+
+await startRound(currentRoom);
 
 let currentRoom = null;
 let ready = false;

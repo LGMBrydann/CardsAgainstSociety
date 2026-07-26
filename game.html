@@ -1,35 +1,248 @@
-.player-card {
+<!DOCTYPE html>
+<html lang="en">
 
-display:flex;
+<head>
 
-align-items:center;
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-gap:15px;
-
-background:
-rgba(255,255,255,.1);
-
-padding:15px;
-
-margin:10px 0;
-
-border-radius:20px;
-
-backdrop-filter:blur(10px);
-
-}
+<title>
+Cards Against Society
+</title>
 
 
-.player-avatar {
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/game.css">
 
-width:60px;
+</head>
 
-height:60px;
 
-border-radius:50%;
+<body>
 
-object-fit:cover;
 
-border:2px solid white;
+<div class="game-container">
 
-}
+
+<header class="game-header">
+
+<h1>
+🃏 Cards Against Society
+</h1>
+
+<div class="room-display">
+
+Room:
+<span id="roomCode">
+Loading...
+</span>
+
+</div>
+
+</header>
+
+
+
+
+<!-- ROUND INFO -->
+
+<section class="round-info">
+
+<h2 id="roundText">
+Round 1
+</h2>
+
+
+<p id="gameStatus">
+Waiting for players...
+</p>
+
+</section>
+
+
+
+
+
+<!-- BLACK CARD -->
+
+<section class="black-card-area">
+
+
+<h2>
+Current Prompt
+</h2>
+
+
+<div class="black-card">
+
+<p id="blackCard">
+
+Waiting for the judge...
+
+</p>
+
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+<!-- PLAYER HAND -->
+
+<section class="hand-area">
+
+
+<h2>
+Your Cards
+</h2>
+
+
+<div id="hand">
+
+</div>
+
+
+
+<button id="submitCard">
+
+Submit Answer
+
+</button>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- JUDGE AREA -->
+
+
+<section id="judgePanel" class="judge-panel hidden">
+
+
+<h2>
+👑 Judge Selection
+</h2>
+
+
+<p>
+Choose the funniest answer:
+</p>
+
+
+<div id="submissions">
+
+</div>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- WAITING AREA -->
+
+
+<section id="waitingPanel">
+
+
+<h2>
+Waiting...
+</h2>
+
+
+<p id="waitingText">
+
+Waiting for the judge...
+
+</p>
+
+
+</section>
+
+
+
+
+
+
+
+
+<!-- SCOREBOARD -->
+
+
+<section class="scoreboard">
+
+
+<h2>
+Scores
+</h2>
+
+
+<ul id="scores">
+
+</ul>
+
+
+</section>
+
+
+
+
+
+
+
+<!-- END GAME -->
+
+
+<section id="endGamePanel" class="hidden">
+
+
+<h2>
+🏆 Game Over
+</h2>
+
+
+<h3 id="winnerText">
+
+</h3>
+
+
+<button id="returnLobby">
+
+Return To Lobby
+
+</button>
+
+
+</section>
+
+
+
+
+
+
+</div>
+
+
+
+
+
+<script type="module" src="js/game.js"></script>
+
+
+</body>
+
+</html>
