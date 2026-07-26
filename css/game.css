@@ -1,103 +1,86 @@
 .game-container {
-
-height:100vh;
-
-display:flex;
-
-flex-direction:column;
-
-align-items:center;
-
-justify-content:center;
-
-gap:20px;
-
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    padding: 24px;
+    background:
+        radial-gradient(circle at top left, rgba(255, 212, 120, 0.16), transparent 30%),
+        radial-gradient(circle at bottom right, rgba(140, 75, 18, 0.22), transparent 28%),
+        linear-gradient(135deg, #1a0f04 0%, #3a220d 45%, #140806 100%);
 }
 
-
 .black-card {
-
-background:black;
-
-color:white;
-
-padding:30px;
-
-width:350px;
-
-border-radius:20px;
-
+    background: linear-gradient(145deg, #1d1208, #3b1f0a);
+    color: #fff7e6;
+    padding: 30px;
+    width: 360px;
+    min-height: 220px;
+    border-radius: 24px;
+    border: 2px solid #d49a3d;
+    box-shadow: 0 16px 40px rgba(0, 0, 0, 0.42);
+    font-weight: 700;
+    font-size: 1.15rem;
 }
 
 
 #hand {
-
-display:flex;
-
-gap:15px;
-
-flex-wrap:wrap;
-
-justify-content:center;
-
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 8px 0;
 }
 
 
 
 .card {
-
-background:white;
-
-color:black;
-
-padding:20px;
-
-width:160px;
-
-height:200px;
-
-border-radius:20px;
-
-cursor:pointer;
-
-transition:.2s;
-
+    background: linear-gradient(135deg, #fff8e8, #f2d9a7);
+    color: #2f1f0d;
+    padding: 20px;
+    width: 165px;
+    height: 205px;
+    border-radius: 22px;
+    cursor: pointer;
+    transition: .2s;
+    border: 2px solid #7a4714;
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.22);
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 0.3px;
 }
 
 
 
 .card:hover {
-
-transform:translateY(-10px);
-
+    transform: translateY(-10px) rotate(-1deg);
+    box-shadow: 0 16px 34px rgba(2, 6, 23, 0.32);
 }
 
 
 .selected {
-
-outline:5px solid #8b5cf6;
-
+    outline: 4px solid #d08a2d;
+    box-shadow: 0 0 0 3px rgba(208, 138, 45, 0.28), 0 14px 32px rgba(208, 138, 45, 0.35);
+    transform: translateY(-8px) rotate(-1deg);
 }
 
 .player-card {
-
-display:flex;
-
-align-items:center;
-
-gap:15px;
-
-background:
-rgba(255,255,255,.1);
-
-padding:15px;
-
-margin:10px 0;
-
-border-radius:20px;
-
-backdrop-filter:blur(10px);
-
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    background: rgba(38, 22, 10, 0.9);
+    padding: 15px;
+    margin: 10px 0;
+    border-radius: 20px;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(208, 138, 45, 0.35);
+    box-shadow: 0 10px 24px rgba(0, 0, 0, 0.25);
 }
 
 
