@@ -108,6 +108,9 @@ function renderWinnerState() {
     const resultMessage = document.getElementById("resultMessage");
     const winnerPanel = document.getElementById("winnerPanel");
     const winnerPanelText = document.getElementById("winnerPanelText");
+    const endGamePanel = document.getElementById("endGamePanel");
+    const winnerText = document.getElementById("winnerText");
+    const winnerDetail = document.getElementById("winnerDetail");
 
     if (!resultMessage || !currentRoomData) {
         return;
@@ -122,10 +125,18 @@ function renderWinnerState() {
             winnerPanel.classList.remove("hidden");
             winnerPanelText.innerHTML = `<strong>${winnerName} won!</strong><br>${cardText}`;
         }
+        if (endGamePanel && winnerText && winnerDetail) {
+            endGamePanel.classList.remove("hidden");
+            winnerText.textContent = `${winnerName} won!`;
+            winnerDetail.textContent = cardText;
+        }
     } else {
         resultMessage.textContent = "";
         if (winnerPanel) {
             winnerPanel.classList.add("hidden");
+        }
+        if (endGamePanel) {
+            endGamePanel.classList.add("hidden");
         }
     }
 }
@@ -136,6 +147,9 @@ function renderSubmissions() {
     const submitButton = document.getElementById("submitCard");
     const waitingText = document.getElementById("waitingText");
     const submissionsArea = document.getElementById("submissions");
+    const wheelPanel = document.getElementById("wheelPanel");
+    const wheel = document.getElementById("wheel");
+    const wheelLabel = document.getElementById("wheelLabel");
 
     if (!judgePanel || !waitingPanel || !submissionsArea || !waitingText || !submitButton) {
         return;
@@ -158,17 +172,46 @@ function renderSubmissions() {
         if (!submissionEntries.length) {
             submissionsArea.innerHTML = "<p>Waiting for players to submit cards...</p>";
         } else {
-            submissionEntries.forEach(([key, submission]) => {
-                const button = document.createElement("button");
-                button.textContent = submission.text;
-                button.onclick = async () => {
-                    await chooseWinner(roomCode, key);
-                };
-                submissionsArea.appendChild(button);
-            });
+            const wheelPlayers = submissionEntries.map(([key, submission]) => ({ key, text: submission.text, playerName: submission.playerName }));
+            const wheelLabels = wheelPlayers.map((entry) => entry.playerName || "Player");
+            wheelPanel.classList.remove("hidden");
+            if (wheel) {
+                wheel.innerHTML = '<div class="wheel-center">SPIN</div>';
+                wheelLabels.forEach((name, index) => {
+                    const slice = document.createElement("div");
+                    slice.className = "wheel-slice";
+                    slice.textContent = name;
+                    slice.style.setProperty("--angle", `${index * (360 / wheelLabels.length)}deg`);
+                    wheel.appendChild(slice);
+                });
+                wheel.style.transform = "rotate(0deg)";
+            }
+            if (wheelLabel) {
+                wheelLabel.textContent = "The wheel will pick the funniest answer.";
+            }
+            submissionsArea.innerHTML = "";
+            const spinButton = document.createElement("button");
+            spinButton.textContent = "Spin for winner";
+            spinButton.onclick = async () => {
+                if (wheel) {
+                    wheel.style.transform = "rotate(2160deg)";
+                }
+                if (wheelLabel) {
+                    wheelLabel.textContent = "Spinning...";
+                }
+                setTimeout(async () => {
+                    const winnerEntry = wheelPlayers[Math.floor(Math.random() * wheelPlayers.length)];
+                    if (wheelLabel) {
+                        wheelLabel.textContent = `${winnerEntry.playerName || "Player"} wins the pick!`;
+                    }
+                    await chooseWinner(roomCode, winnerEntry.key);
+                }, 4000);
+            };
+            submissionsArea.appendChild(spinButton);
         }
     } else {
         submissionsArea.innerHTML = "";
+        wheelPanel.classList.add("hidden");
         waitingText.textContent = alreadySubmitted
             ? "Your card is in. Waiting for the judge..."
             : "Waiting for the judge...";
